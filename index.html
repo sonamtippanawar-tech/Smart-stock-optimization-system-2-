@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Inventory & Stock Optimization</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">▦</span><div><strong>StockWise</strong><small>SMART INVENTORY SYSTEM</small></div></div>
+    <span class="live"><i></i> Inventory dashboard</span>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <div><p class="eyebrow">OVERVIEW</p><h1>Inventory Dashboard</h1><p class="muted">Track products, monitor stock levels and make smarter reorder decisions.</p></div>
+      <button class="primary" id="addBtn">＋ Add product</button>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card"><span class="stat-label">Total products</span><strong id="totalProducts">—</strong><small>Different SKUs</small></article>
+      <article class="stat-card"><span class="stat-label">Total units in stock</span><strong id="totalUnits">—</strong><small>Across all products</small></article>
+      <article class="stat-card"><span class="stat-label">Inventory value</span><strong id="inventoryValue">—</strong><small>Based on unit cost</small></article>
+      <article class="stat-card warning-card"><span class="stat-label">Needs attention</span><strong id="lowStock">—</strong><small id="reorderCount">Items to review</small></article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div><h2>Product inventory</h2><p class="muted">Search, review and manage your stock.</p></div>
+        <input id="search" class="search" type="search" placeholder="Search product or SKU..." />
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>PRODUCT</th><th>SKU / CATEGORY</th><th>AVAILABLE</th><th>REORDER POINT</th><th>RECOMMENDED ORDER</th><th>STATUS</th><th>ACTION</th></tr></thead>
+          <tbody id="inventoryBody"><tr><td colspan="7" class="empty">Loading inventory...</td></tr></tbody>
+        </table>
+      </div>
+      <p class="table-note">Reorder point is calculated from average daily sales, supplier lead time and a 2-day safety-stock allowance.</p>
+    </section>
+
+    <section class="panel tips">
+      <div><p class="eyebrow">SMART STOCK OPTIMIZATION</p><h2>How the recommendation works</h2><p class="muted">The system estimates demand while you wait for a supplier and adds a small safety buffer.</p></div>
+      <div class="formula"><strong>Reorder point</strong><span>Daily sales × Lead time + Safety stock</span><strong>Suggested order</strong><span>Target stock − Current quantity (minimum 0)</span></div>
+    </section>
+  </main>
+
+  <dialog id="productDialog">
+    <form id="productForm">
+      <div class="dialog-head"><div><p class="eyebrow">INVENTORY ITEM</p><h2 id="dialogTitle">Add product</h2></div><button type="button" class="close" id="closeDialog">×</button></div>
+      <input type="hidden" id="productId" />
+      <div class="form-grid">
+        <label>Product name<input id="name" required placeholder="e.g. Wireless Keyboard" /></label>
+        <label>SKU<input id="sku" required placeholder="e.g. ELE-005" /></label>
+        <label>Category<input id="category" placeholder="e.g. Electronics" /></label>
+        <label>Current quantity<input id="quantity" type="number" min="0" required value="0" /></label>
+        <label>Minimum stock<input id="minStock" type="number" min="0" value="5" /></label>
+        <label>Average daily sales<input id="dailySales" type="number" min="0" step="0.1" required value="1" /></label>
+        <label>Supplier lead time (days)<input id="leadTime" type="number" min="0" required value="5" /></label>
+        <label>Unit cost (₹)<input id="unitCost" type="number" min="0" step="0.01" value="0" /></label>
+      </div>
+      <p id="formError" class="error"></p>
+      <div class="dialog-actions"><button type="button" class="secondary" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save product</button></div>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
